@@ -57,6 +57,14 @@ function shareResponse(row: ShareRow): ShareResponse {
 
 app.get('/api/health', (c) => c.json({ status: 'ok' }))
 
+app.get('/api/homes/:homeId', async (c) => {
+  const home = await c.env.DB.prepare('SELECT id, name FROM homes WHERE id = ?')
+    .bind(c.req.param('homeId'))
+    .first<HomeRow>()
+  if (!home) return c.json({ error: 'Home not found' }, 404)
+  return c.json(home)
+})
+
 app.post('/api/homes', async (c) => {
   const body = await readJson(c)
   if (!isRecord(body) || !validName(body.name)) {
