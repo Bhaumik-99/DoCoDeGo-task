@@ -51,7 +51,7 @@ function Home() {
     setError('')
     try {
       const [homeData, billsData, balanceData] = await Promise.all([
-        request<HomeRecord>(`/api/homes/${encodeURIComponent(id)}`).catch(() => ({ id, name: 'Your shared home' })),
+        request<HomeRecord>(`/api/homes/${encodeURIComponent(id)}`),
         request<{ bills: Bill[] }>(`/api/homes/${encodeURIComponent(id)}/bills`),
         request<{ balances: Balance[] }>(`/api/homes/${encodeURIComponent(id)}/balances`),
       ])
