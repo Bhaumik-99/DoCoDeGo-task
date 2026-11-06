@@ -203,7 +203,7 @@ app.get('/api/homes/:homeId/balances', async (c) => {
 
   const rows = await c.env.DB.prepare(`
     SELECT m.id AS member_id, m.name AS name,
-      COALESCE(SUM(CASE WHEN s.paid_at IS NULL THEN s.amount_cents ELSE 0 END), 0) AS outstanding_cents
+      COALESCE(SUM(CASE WHEN s.paid_at IS NULL AND b.id IS NOT NULL THEN s.amount_cents ELSE 0 END), 0) AS outstanding_cents
     FROM members m
     LEFT JOIN shares s ON s.member_id = m.id
     LEFT JOIN bills b ON b.id = s.bill_id AND b.home_id = m.home_id
