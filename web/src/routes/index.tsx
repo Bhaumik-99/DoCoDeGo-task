@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import type { FormEvent } from 'react'
 import '../styles.css'
 
 export const Route = createFileRoute('/')({ component: Home })
@@ -75,7 +76,7 @@ function Home() {
     [balances],
   )
 
-  async function createHome(event: React.FormEvent<HTMLFormElement>) {
+  async function createHome(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError('')
     try {
@@ -91,7 +92,7 @@ function Home() {
     }
   }
 
-  async function addMember(event: React.FormEvent<HTMLFormElement>) {
+  async function addMember(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!homeId) return
     setError('')
@@ -106,7 +107,7 @@ function Home() {
     }
   }
 
-  async function createBill(event: React.FormEvent<HTMLFormElement>) {
+  async function createBill(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!homeId) return
     const amount = Number(billAmount)
